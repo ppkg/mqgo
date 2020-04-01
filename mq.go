@@ -35,7 +35,6 @@ func Publish(model SyncMqInfo) error {
 		return err
 	}
 
-
 	model.Id = uuid.New().String()
 
 	msg, _ := json.Marshal(model)
@@ -95,6 +94,9 @@ func Consume(name, key, exchange string, autoAck bool, fun func(request string) 
 				var model SyncMqInfo
 				if err := json.Unmarshal(d.Body, &model); err != nil {
 					glog.Error(err, fmt.Sprintf(" %s %s %s %s", exchange, key, name, string(d.Body)))
+				}
+
+				if len(model.Id) < 32 && model.Exchange == "" && model.RouteKey == "" {
 					model.Id = uuid.New().String()
 					model.Exchange = exchange
 					model.RouteKey = key
