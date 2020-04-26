@@ -12,7 +12,7 @@ import (
 
 func NewDataCenterConn() *xorm.Engine {
 	connString := config.GetString("mysql.datacenter")
-	connString = "root:password@(10.1.1.245:3306)/datacenter?charset=utf8"
+	//connString = "root:password@(10.1.1.245:3306)/datacenter?charset=utf8"
 
 	var engine *xorm.Engine
 	if e, err := xorm.NewEngine("mysql", connString); err != nil {
