@@ -20,10 +20,8 @@ func init() {
 	var mySqlStr string
 	if App.Mysql.Host != "" {
 		mySqlStr = fmt.Sprintf("%s:%s@(%s:%d)/%s?charset=utf8", App.Mysql.User, App.Mysql.Pwd, App.Mysql.Host, App.Mysql.Port, App.Mysql.Default)
-		fmt.Println("appsetting.toml", mySqlStr)
 	} else {
 		mySqlStr = config.GetString("mysql.datacenter")
-		fmt.Println("ConfigService", mySqlStr)
 	}
 
 	if App.Mq.HostName == "" {
@@ -40,7 +38,7 @@ func init() {
 	}
 
 	e, err := xorm.NewEngine("mysql", mySqlStr)
-	e.ShowSQL(true)
+	//e.ShowSQL(true)
 
 	if err != nil {
 		glog.Fatal("mysql connect fail", err)
