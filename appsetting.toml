@@ -1,7 +1,6 @@
 [Grpc]
 Appid="mqsync"
-Address="14.116.138.74:10000"
-#Address="10.1.1.248:10000"
+Address="10.1.1.248:10000"
 
 [LogService]
 Appid="mqsync"
