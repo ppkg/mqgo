@@ -47,6 +47,7 @@ func Publish(model SyncMqInfo) error {
 		return err
 	}
 
+	engine := NewDataCenterConn()
 	if _, err := engine.Insert(model); err != nil {
 		glog.Error(err)
 	}
@@ -80,7 +81,7 @@ func Consume(name, key, exchange string, autoAck bool, fun func(request string) 
 	if err != nil {
 		glog.Error(err)
 	}
-
+	engine := NewDataCenterConn()
 	for {
 		for d := range delivery {
 			func() {
