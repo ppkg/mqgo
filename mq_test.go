@@ -3,8 +3,6 @@ package mqsync
 import (
 	"fmt"
 	"testing"
-
-	"github.com/maybgit/mqsync/models"
 )
 
 func TestT(t *testing.T) {
@@ -12,7 +10,7 @@ func TestT(t *testing.T) {
 }
 func TestPublish(t *testing.T) {
 	type args struct {
-		model models.SyncMqInfo
+		model SyncMqInfo
 	}
 	tests := []struct {
 		name    string
@@ -22,11 +20,11 @@ func TestPublish(t *testing.T) {
 		{
 			name: "订阅",
 			args: args{
-				model: models.SyncMqInfo{
+				model: SyncMqInfo{
 					Exchange: "datacenter",
 					Queue:    "dc-sz-test-mqsync",
 					RouteKey: "dc-sz-test-mqsync",
-					Request:  "content",
+					Request:  "content1",
 				},
 			},
 		},

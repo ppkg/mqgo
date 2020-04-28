@@ -7,17 +7,16 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/maybgit/glog"
-	"github.com/maybgit/mqsync/models"
 	"github.com/streadway/amqp"
 )
 
 /*
 example:
-if err := mqsync.Publish(models.SyncMqInfo{Exchange: "", RouteKey: "", Request: ""}); err != nil {
+if err := mqsync.Publish(SyncMqInfo{Exchange: "", RouteKey: "", Request: ""}); err != nil {
 	fmt.Println(err)
 }
 */
-func Publish(model models.SyncMqInfo) error {
+func Publish(model SyncMqInfo) error {
 	if model.Exchange == "" {
 		return errors.New("Exchange is empty")
 	}
@@ -106,7 +105,7 @@ func Consume(queue, key, exchange string, fun func(request string) (response str
 					}
 				}()
 
-				var model models.SyncMqInfo
+				var model SyncMqInfo
 				json.Unmarshal(d.Body, &model)
 
 				if len(model.Id) < 32 && model.Exchange == "" && model.RouteKey == "" {
@@ -120,7 +119,7 @@ func Consume(queue, key, exchange string, fun func(request string) (response str
 					}
 				}
 
-				record := models.SyncMqRecord{SyncMqInfoId: model.Id, Queue: queue, Exchange: exchange, RouteKey: key}
+				record := SyncMqRecord{SyncMqInfoId: model.Id, Queue: queue, Exchange: exchange, RouteKey: key}
 
 				if model.Response, err = fun(model.Request); err != nil {
 					d.Reject(true)
