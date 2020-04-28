@@ -11,11 +11,12 @@ import (
 )
 
 func NewDataCenterConn() *xorm.Engine {
-	connString := config.GetString("mysql.datacenter")
-	//connString = "root:password@(10.1.1.245:3306)/datacenter?charset=utf8"
+	if App.ConnectionString.DataCenter == "" {
+		App.ConnectionString.DataCenter = config.GetString("mysql.datacenter")
+	}
 
 	var engine *xorm.Engine
-	if e, err := xorm.NewEngine("mysql", connString); err != nil {
+	if e, err := xorm.NewEngine("mysql", App.ConnectionString.DataCenter); err != nil {
 		glog.Error(err)
 	} else {
 		if location, err := time.LoadLocation("Asia/Shanghai"); err != nil {
@@ -29,10 +30,11 @@ func NewDataCenterConn() *xorm.Engine {
 }
 
 func NewMqConn() *amqp.Connection {
-	url := config.GetString("mq.oneself")
-	//url = ""
+	if App.ConnectionString.RabbitMq == "" {
+		App.ConnectionString.RabbitMq = config.GetString("mq.oneself")
+	}
 
-	conn, err := amqp.Dial(url)
+	conn, err := amqp.Dial(App.ConnectionString.RabbitMq)
 	if err != nil {
 		glog.Error("mq.NewMqConn", err)
 	}
