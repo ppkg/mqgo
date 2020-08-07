@@ -36,7 +36,26 @@ func Publish(model SyncMqInfo) error {
 	ch := NewMqChannel(conn)
 	defer ch.Close()
 
+	q, err := ch.QueueDeclare(
+		model.Queue, // name
+		true,  // durable
+		false, // delete when unused
+		false, // exclusive
+		false, // no-wait
+		nil,   // arguments
+	)
+	if err != nil {
+		glog.Error(q.Name, err)
+		return err
+	}
+
 	if err := ch.ExchangeDeclare(model.Exchange, "direct", true, false, false, false, nil); nil != err {
+		return err
+	}
+
+	err = ch.QueueBind(model.Queue, model.Queue, model.Exchange, false, nil)
+	if err != nil {
+		glog.Error(err)
 		return err
 	}
 
@@ -85,7 +104,24 @@ func Consume(queue, key, exchange string, fun func(request string) (response str
 	}
 	defer ch.Close()
 
-	err := ch.QueueBind(queue, key, exchange, false, nil)
+	q, err := ch.QueueDeclare(
+		queue, // name
+		true,  // durable
+		false, // delete when unused
+		false, // exclusive
+		false, // no-wait
+		nil,   // arguments
+	)
+	if err != nil {
+		glog.Error(q.Name, err)
+		return
+	}
+
+	if err := ch.ExchangeDeclare(exchange, "direct", true, false, false, false, nil); nil != err {
+		return
+	}
+
+	err = ch.QueueBind(queue, key, exchange, false, nil)
 	if err != nil {
 		glog.Error(queue, key, exchange, err.Error())
 		return
