@@ -10,7 +10,7 @@ import (
 	"github.com/streadway/amqp"
 )
 
-func NewDataCenterConn() *xorm.Engine {
+func newDataCenterConn() *xorm.Engine {
 	if App.ConnectionString.DataCenter == "" {
 		App.ConnectionString.DataCenter = config.GetString("mysql.datacenter")
 	}
@@ -29,22 +29,22 @@ func NewDataCenterConn() *xorm.Engine {
 	return engine
 }
 
-func NewMqConn() *amqp.Connection {
+func newMqConn() *amqp.Connection {
 	if App.ConnectionString.RabbitMq == "" {
 		App.ConnectionString.RabbitMq = config.GetString("mq.oneself")
 	}
 
 	conn, err := amqp.Dial(App.ConnectionString.RabbitMq)
 	if err != nil {
-		glog.Error("mq.NewMqConn", err)
+		glog.Error("mq.newMqConn", err)
 	}
 	return conn
 }
 
-func NewMqChannel(conn *amqp.Connection) *amqp.Channel {
+func newMqChannel(conn *amqp.Connection) *amqp.Channel {
 	c, err := conn.Channel()
 	if err != nil {
-		glog.Error("mq.NewMqChannel", err)
+		glog.Error("mq.newMqChannel", err)
 	}
 	return c
 }

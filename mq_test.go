@@ -1,16 +1,21 @@
 package mqsync
 
 import (
-	"fmt"
 	"testing"
+	"time"
 )
 
 func TestT(t *testing.T) {
 
 }
 func TestPublish(t *testing.T) {
+	// engine := newDataCenterConn()
+	// engine.Exec("TRUNCATE TABLE mq_publish_info")
+	// engine.Exec("TRUNCATE TABLE mq_consume_record")
+	// go TestConsume(t)
+
 	type args struct {
-		model SyncMqInfo
+		model MqPublishInfo
 	}
 	tests := []struct {
 		name    string
@@ -18,11 +23,10 @@ func TestPublish(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "订阅",
+			name: "推送",
 			args: args{
-				model: SyncMqInfo{
+				model: MqPublishInfo{
 					Exchange: "datacenter",
-					Queue:    "dc-sz-test-mqsync",
 					RouteKey: "dc-sz-test-mqsync",
 					Request:  "content1",
 				},
@@ -30,11 +34,14 @@ func TestPublish(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if err := Publish(tt.args.model); (err != nil) != tt.wantErr {
-				t.Errorf("Publish() error = %v, wantErr %v", err, tt.wantErr)
-			}
-		})
+		for i := 0; i < 10; i++ {
+			t.Run(tt.name, func(t *testing.T) {
+				if err := Publish(tt.args.model); (err != nil) != tt.wantErr {
+					t.Errorf("Publish() error = %v, wantErr %v", err, tt.wantErr)
+				}
+			})
+			// time.Sleep(time.Second)
+		}
 	}
 }
 
@@ -50,7 +57,6 @@ func TestConsume(t *testing.T) {
 		name     string
 		key      string
 		exchange string
-		autoAck  bool
 		fun      func(request string) (string, error)
 	}
 	tests := []struct {
@@ -63,9 +69,18 @@ func TestConsume(t *testing.T) {
 				name:     "dc-sz-test-mqsync",
 				key:      "dc-sz-test-mqsync",
 				exchange: "datacenter",
-				autoAck:  true,
 				fun: func(request string) (string, error) {
-					fmt.Println(request)
+					return "测试成功", nil
+				},
+			},
+		},
+		{
+			name: "消费2",
+			args: args{
+				name:     "dc-sz-test-mqsync2",
+				key:      "dc-sz-test-mqsync",
+				exchange: "datacenter",
+				fun: func(request string) (string, error) {
 					return "测试成功", nil
 				},
 			},
@@ -73,7 +88,8 @@ func TestConsume(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			Consume(tt.args.name, tt.args.key, tt.args.exchange, tt.args.fun)
+			go Consume(tt.args.name, tt.args.key, tt.args.exchange, tt.args.fun)
 		})
 	}
+	time.Sleep(time.Second * 9999)
 }

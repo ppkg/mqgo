@@ -7,5 +7,5 @@ Appid="mqsync"
 Address="10.1.1.248:10001"
 
 [ConnectionString]
-DataCenter="root:pwd@(10.1.1.245:3306)/datacenter?charset=utf8"
+DataCenter="root:Rp000000@(10.1.1.245:3306)/datacenter?charset=utf8"
 RabbitMq="amqp://admin:admin@10.1.1.248:5672/"
