@@ -1,7 +1,0 @@
-[Grpc]
-Appid="mqsync"
-Address="10.1.1.248:10000"
-
-[LogService]
-Appid="mqsync"
-Address="10.1.1.248:10001"

@@ -2,6 +2,7 @@ package mqsync
 
 import (
 	"encoding/json"
+	"errors"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -191,4 +192,24 @@ func (mq *Mq) Consume(queue, key, exchange string, fun func(request string) (res
 		}
 		time.Sleep(time.Second * 5)
 	}
+}
+
+type SyncMqInfo struct {
+	Id       string `xorm:"not null pk VARCHAR(36)"`
+	Exchange string `xorm:"default 'NULL' comment('交换机名称') VARCHAR(100)"`
+	RouteKey string `xorm:"default 'NULL' comment('路由名称') VARCHAR(100)"`
+	Queue    string `xorm:"default 'NULL' comment('队列名称') VARCHAR(100)"`
+	Request  string `xorm:"default 'NULL' comment('请求') TEXT"`
+	Response string `xorm:"default 'NULL' comment('消息发布结果') TEXT"`
+	// PlatformId    int       `xorm:"default NULL comment(' 平台ID') INT(11)"`
+	// ChannelId     int       `xorm:"default NULL comment('渠道ID') INT(11)"`
+}
+
+type SyncMqRecord struct {
+	Id           int    `xorm:"not null pk autoincr INT(11)"`
+	SyncMqInfoId string `xorm:"default 'NULL' comment('消息ID') VARCHAR(36)"`
+	Queue        string `xorm:"default 'NULL' comment('队列名称') VARCHAR(255)"`
+	Exchange     string `xorm:"default 'NULL' comment('交换机名称') VARCHAR(255)"`
+	RouteKey     string `xorm:"default 'NULL' comment('路由名称') VARCHAR(255)"`
+	Response     string `xorm:"default 'NULL' comment('响应结果') TEXT"`
 }
