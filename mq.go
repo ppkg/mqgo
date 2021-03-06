@@ -2,7 +2,6 @@ package mqsync
 
 import (
 	"encoding/json"
-	"errors"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -19,6 +18,7 @@ type Mq struct {
 	KeepConnected bool         //是否保持mq连接
 }
 
+//engine等于nil时，消息内容不落地到数据库
 func NewMq(mqConnStr string, engine *xorm.Engine) *Mq {
 	mq := new(Mq)
 	var err error
@@ -39,6 +39,7 @@ func NewMq(mqConnStr string, engine *xorm.Engine) *Mq {
 	return mq
 }
 
+//mysqlConnStr等于空时，消息内容不落地到数据库
 func NewMq2(mqConnStr, mysqlConnStr string) *Mq {
 	return NewMq(mqConnStr, newEngine(mysqlConnStr))
 }
@@ -64,12 +65,6 @@ func (mq *Mq) close() {
 	}
 }
 
-/*
-example:
-if err := mqsync.Publish(SyncMqInfo{Exchange: "", RouteKey: "", Request: ""}); err != nil {
-	fmt.Println(err)
-}
-*/
 func (mq *Mq) Publish(model SyncMqInfo) error {
 	defer mq.close()
 
@@ -122,15 +117,6 @@ func (mq *Mq) Publish(model SyncMqInfo) error {
 	return nil
 }
 
-/*
-example:
-go mqsync.Consume(queue, key, exchange, func(request string) (response string, err error) {
-		if err := xxx();err != nil{
-			return "faild",err
-		}
-		return "success", nil
-	})
-*/
 func (mq *Mq) Consume(queue, key, exchange string, fun func(request string) (response string, err error)) {
 	defer mq.close()
 
