@@ -15,12 +15,6 @@ func init() {
 }
 
 type AppSetting struct {
-	//数据库、MQ配置串
-	ConnectionString struct {
-		DataCenter string
-		RabbitMq   string
-	}
-
 	//配置中心服务端地址
 	Grpc struct {
 		Appid   string
