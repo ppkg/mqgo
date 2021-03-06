@@ -5,7 +5,7 @@
 ```
 var (
     mqConnStr    = "amqp://admin:admin@10.1.1.248:5672/"
-    mysqlConnStr = "root:Rp000000@(10.1.1.245:3306)/datacenter?charset=utf8"
+    mysqlConnStr = "root:pwd@(10.1.1.245:3306)/datacenter?charset=utf8"
     engine = *xorm.Engine
 )
 ```
