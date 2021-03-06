@@ -1,6 +1,6 @@
 ## mq公共包使用文档：
 
-`go get -u github.com/maybgit/mqsync@版本号`
+`go get -u github.com/tricobbler/mqsync@版本号`
 
 **注意：** 如果mysqlConnStr为空或者engine为nil，则消息内容，不落地到数据库
 
