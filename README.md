@@ -10,29 +10,31 @@ var (
 )
 ```
 
-### 推送消息：
+**推送消息：**
 
 ```
+//当engine等于nil时，消息内容不会写入数据库
 if err := mqsync.NewMq(mqConnStr, engine).Publish(mqsync.SyncMqInfo{
     Exchange: 交换机,
     RouteKey: 路由,
     Queue:    队列名,
     Request:  消息内容,
 }); err != nil {
-//...
+    //Publish失败
 }
 ```
 
 或者
 
 ```
+//当mysqlConnStr等于空时，消息内容不会写入数据库
 if err := mqsync.NewMq2(mqConnStr, mysqlConnStr).Publish(mqsync.SyncMqInfo{
     Exchange: 交换机,
     RouteKey: 路由,
     Queue:    队列名,
     Request:  消息内容,
 }); err != nil {
-//...
+    //Publish失败
 }
 ```
 
