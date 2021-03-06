@@ -58,7 +58,7 @@ func newEngine(mysqlConnStr string) *xorm.Engine {
 	return nil
 }
 
-func (mq *Mq) close() {
+func (mq *Mq) Close() {
 	if !mq.KeepConnected {
 		mq.conn.Close()
 		mq.ch.Close()
@@ -66,7 +66,7 @@ func (mq *Mq) close() {
 }
 
 func (mq *Mq) Publish(model SyncMqInfo) error {
-	defer mq.close()
+	defer mq.Close()
 
 	q, err := mq.ch.QueueDeclare(
 		model.Queue, // name
@@ -118,7 +118,7 @@ func (mq *Mq) Publish(model SyncMqInfo) error {
 }
 
 func (mq *Mq) Consume(queue, key, exchange string, fun func(request string) (response string, err error)) {
-	defer mq.close()
+	defer mq.Close()
 
 	q, err := mq.ch.QueueDeclare(
 		queue, // name

@@ -14,6 +14,15 @@ var (
 
 **推送消息：**
 
+保持连接状态打开，当KeepConnected=true时，记得手动关闭连接
+```
+mq := mqsync.NewMq2(mqConnStr, mysqlConnStr)
+mq.KeepConnected = true
+defer mq.Close()
+mq.Publish()
+```
+
+Publish完后，连接会自动关闭
 ```
 //当engine等于nil时，消息内容不会写入数据库
 if err := mqsync.NewMq(mqConnStr, engine).Publish(mqsync.SyncMqInfo{
