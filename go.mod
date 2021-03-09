@@ -1,4 +1,4 @@
-module github.com/maybgit/mqsync
+module github.com/tricobbler/mqsync
 
 go 1.14
 
