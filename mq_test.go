@@ -22,7 +22,7 @@ func TestMq_Publish(t *testing.T) {
 	}{
 		{
 			name: "订阅",
-			mq:   NewMq2(mqConnStr, mysqlConnStr),
+			mq:   NewMqByStr(mqConnStr, mysqlConnStr),
 			args: args{
 				model: SyncMqInfo{
 					Exchange: "datacenter",
@@ -56,7 +56,7 @@ func TestMq_Consume(t *testing.T) {
 	}{
 		{
 			name: "消费",
-			mq:   NewMq2(mqConnStr, mysqlConnStr),
+			mq:   NewMqByStr(mqConnStr, mysqlConnStr),
 			args: args{
 				queue:    "dc-sz-test-mqsync",
 				key:      "dc-sz-test-mqsync",

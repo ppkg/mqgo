@@ -40,7 +40,7 @@ func NewMq(mqConnStr string, engine *xorm.Engine) *Mq {
 }
 
 //mysqlConnStr等于空时，消息内容不落地到数据库
-func NewMq2(mqConnStr, mysqlConnStr string) *Mq {
+func NewMqByStr(mqConnStr, mysqlConnStr string) *Mq {
 	return NewMq(mqConnStr, newEngine(mysqlConnStr))
 }
 
