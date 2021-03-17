@@ -1,4 +1,4 @@
-package mqsync
+package mqgo
 
 import (
 	"fmt"

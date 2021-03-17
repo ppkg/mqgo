@@ -1,4 +1,4 @@
-package mqsync
+package mqgo
 
 import (
 	"encoding/json"
@@ -34,8 +34,8 @@ func NewMq(mqConnStr string, engine *xorm.Engine) *Mq {
 		return nil
 	}
 
+	engine.ShowSQL(true)
 	mq.engine = engine
-
 	return mq
 }
 
@@ -95,7 +95,7 @@ func (mq *Mq) Publish(model SyncMqInfo) error {
 	model.Response = "success"
 
 	if mq.engine != nil {
-		if _, err := mq.engine.InsertOne(&model); err != nil {
+		if _, err := mq.engine.Table("datacenter.sync_mq_info").InsertOne(&model); err != nil {
 			glog.Error(err)
 		}
 	}
@@ -109,7 +109,7 @@ func (mq *Mq) Publish(model SyncMqInfo) error {
 		}); nil != err {
 		if mq.engine != nil {
 			model.Response = err.Error()
-			mq.engine.ID(model.Id).Cols("response").Update(model)
+			mq.engine.Table("datacenter.sync_mq_info").ID(model.Id).Cols("response").Update(model)
 		}
 		glog.Error(err)
 		return err
@@ -164,13 +164,13 @@ func (mq *Mq) Consume(queue, key, exchange string, fun func(request string) (res
 
 				if record.Response, err = fun(model.Request); err != nil {
 					d.Reject(true)
-					record.Response = err.Error()
+					record.Response += err.Error()
 				} else {
 					d.Ack(false)
 				}
 
 				if mq.engine != nil {
-					if _, err := mq.engine.Insert(record); err != nil {
+					if _, err := mq.engine.Table("datacenter.sync_mq_record").Insert(record); err != nil {
 						glog.Error(err)
 					}
 				}
