@@ -34,7 +34,7 @@ func NewMq(mqConnStr string, engine *xorm.Engine) *Mq {
 		return nil
 	}
 
-	engine.ShowSQL(true)
+	// engine.ShowSQL(true)
 	mq.engine = engine
 	return mq
 }
