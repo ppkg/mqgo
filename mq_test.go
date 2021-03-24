@@ -3,11 +3,15 @@ package mqgo
 import (
 	"fmt"
 	"testing"
+	"time"
 )
 
 var (
 	mqConnStr    = "amqp://admin:admin@10.1.1.248:5672/"
 	mysqlConnStr = "root:pwd@(10.1.1.245:3306)/datacenter?charset=utf8"
+	queue        = "dc-sz-test-mqsync"
+	key          = "dc-sz-test-mqsync"
+	exchange     = "datacenter"
 )
 
 func TestMq_Publish(t *testing.T) {
@@ -25,10 +29,10 @@ func TestMq_Publish(t *testing.T) {
 			mq:   NewMqByStr(mqConnStr, mysqlConnStr),
 			args: args{
 				model: SyncMqInfo{
-					Exchange: "datacenter",
-					Queue:    "dc-sz-test-mqsync",
-					RouteKey: "dc-sz-test-mqsync",
-					Request:  "content1",
+					Exchange: exchange,
+					Queue:    queue,
+					RouteKey: key,
+					Request:  time.Now().String(),
 				},
 			},
 		},
@@ -58,9 +62,9 @@ func TestMq_Consume(t *testing.T) {
 			name: "消费",
 			mq:   NewMqByStr(mqConnStr, mysqlConnStr),
 			args: args{
-				queue:    "dc-sz-test-mqsync",
-				key:      "dc-sz-test-mqsync",
-				exchange: "datacenter",
+				queue:    queue,
+				key:      key,
+				exchange: exchange,
 				fun: func(request string) (string, error) {
 					fmt.Println(request)
 					return "测试成功", nil

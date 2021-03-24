@@ -160,9 +160,16 @@ func (mq *Mq) Consume(queue, key, exchange string, fun func(request string) (res
 				var model SyncMqInfo
 				json.Unmarshal(d.Body, &model)
 
+				body := model.Request
+				
+				//兼容不是用mqgo.Publish推送的消息
+				if len(model.Id) < 32 && body == "" {
+					body = string(d.Body)
+				}
+
 				record := SyncMqRecord{SyncMqInfoId: model.Id, Queue: queue, Exchange: exchange, RouteKey: key}
 
-				if record.Response, err = fun(model.Request); err != nil {
+				if record.Response, err = fun(body); err != nil {
 					d.Reject(true)
 					record.Response += err.Error()
 				} else {
