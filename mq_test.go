@@ -7,8 +7,8 @@ import (
 )
 
 var (
-	mqConnStr    = "amqp://admin:admin@10.1.1.248:5672/"
-	mysqlConnStr = "root:pwd@(10.1.1.245:3306)/datacenter?charset=utf8"
+	mqConnStr    = "amqp://guest:guest@10.11.200.100:5672/"
+	mysqlConnStr = "root:root@(10.11.200.100:3306)/datacenter?charset=utf8"
 	queue        = "dc-sz-test-mqsync"
 	key          = "dc-sz-test-mqsync"
 	exchange     = "datacenter"

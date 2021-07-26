@@ -39,7 +39,7 @@ if err := mqgo.NewMq(mqConnStr, engine).Publish(mqgo.SyncMqInfo{
 
 ```
 //当mysqlConnStr等于空时，消息内容不会写入数据库
-if err := mqgo.NewMq2(mqConnStr, mysqlConnStr).Publish(mqgo.SyncMqInfo{
+if err := mqgo.NewMqByStr(mqConnStr, mysqlConnStr).Publish(mqgo.SyncMqInfo{
     Exchange: 交换机,
     RouteKey: 路由,
     Queue:    队列名,
@@ -52,7 +52,7 @@ if err := mqgo.NewMq2(mqConnStr, mysqlConnStr).Publish(mqgo.SyncMqInfo{
 **订阅消息：**
 
 ```
-mqgo.NewMq2(mqConnStr, mysqlConnStr).Consume(queue, routeKey, exchange, func(request string) (response string, err error) {
+mqgo.NewMqByStr(mqConnStr, mysqlConnStr).Consume(queue, routeKey, exchange, func(request string) (response string, err error) {
     println(request)
     //成功后会ack
     return "success", nil
