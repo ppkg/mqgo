@@ -1,4 +1,4 @@
-module github.com/tricobbler/mqgo
+module github.com/gogrpc/mqgo
 
 go 1.14
 
