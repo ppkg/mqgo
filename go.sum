@@ -37,8 +37,6 @@ github.com/go-xorm/xorm v0.7.9/go.mod h1:XiVxrMMIhFkwSkh96BW7PACl7UhLtx2iJIHMdmj
 github.com/gofrs/uuid v3.2.0+incompatible/go.mod h1:b2aQJv3Z4Fp6yNu3cdSllBxTCLRxnplIgP/c0N/04lM=
 github.com/gogo/protobuf v1.1.1/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7atdtwQ=
 github.com/gogo/protobuf v1.2.0/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7atdtwQ=
-github.com/gogrpc/glog v0.0.0-20210729172821-188ad323a21e h1:09zluP/c1bhtGFv3W+rCiOWGD3a9hoOOpirNQfWl9Z4=
-github.com/gogrpc/glog v0.0.0-20210729172821-188ad323a21e/go.mod h1:P9tPpSLcckoO/z6S2bXdtA0eMxwuJK8L/+/EUu2z18Q=
 github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b h1:VKtxabqXZkF25pY9ekfRL6a582T4P37/31XEstQ5p58=
 github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b/go.mod h1:SBH7ygxi8pfUlaOkMMuAQtPIUF8ecWP5IEl/CR7VP2Q=
 github.com/golang/mock v1.1.1/go.mod h1:oTYuIxOrZwtPieC+H1uAHpcLFnEyAGVDL/k47Jfbm0A=
@@ -86,6 +84,10 @@ github.com/pkg/errors v0.8.0/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINE
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
+github.com/ppkg/glog v0.0.0-20210729172821-188ad323a21e h1:09zluP/c1bhtGFv3W+rCiOWGD3a9hoOOpirNQfWl9Z4=
+github.com/ppkg/glog v0.0.0-20210729172821-188ad323a21e/go.mod h1:P9tPpSLcckoO/z6S2bXdtA0eMxwuJK8L/+/EUu2z18Q=
+github.com/ppkg/glog v0.0.0-20210823095502-427659edeb41 h1:B+1TGuyJF9tZ/lIq+YKjfEAMuL5UbcHf5HDngD5/9NA=
+github.com/ppkg/glog v0.0.0-20210823095502-427659edeb41/go.mod h1:vDaivA32OksBlRelHMfcUF+RqCdOUhX1ptrtuNVWZxc=
 github.com/prometheus/client_golang v0.9.1/go.mod h1:7SWBe2y4D6OKWSNQJUaRYU/AaXPKyh/dDVn+NZz0KFw=
 github.com/prometheus/client_golang v0.9.3-0.20190127221311-3c4408c8b829/go.mod h1:p2iRAGwDERtqlqzRXnrOVns+ignqQo//hLXqYxZYVNs=
 github.com/prometheus/client_model v0.0.0-20180712105110-5c3871d89910/go.mod h1:MbSGuTsp3dbXC40dX6PRTWyKYBIrTGTE9sqQNg2J8bo=

@@ -7,7 +7,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"
 	"github.com/google/uuid"
-	"github.com/gogrpc/glog"
+	"github.com/ppkg/glog"
 	"github.com/streadway/amqp"
 )
 
@@ -161,7 +161,7 @@ func (mq *Mq) Consume(queue, key, exchange string, fun func(request string) (res
 				json.Unmarshal(d.Body, &model)
 
 				body := model.Request
-				
+
 				//兼容不是用mqgo.Publish推送的消息
 				if len(model.Id) < 32 && body == "" {
 					body = string(d.Body)
