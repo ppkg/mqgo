@@ -7,7 +7,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"
 	"github.com/google/uuid"
-	"github.com/ppkg/glog"
+	"github.com/maybgit/glog"
 	"github.com/streadway/amqp"
 )
 
